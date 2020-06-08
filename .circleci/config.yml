@@ -30,6 +30,8 @@ jobs:
       - GOOGLE_PROJECT_ID: "sincere-chariot-264308"
       - GOOGLE_COMPUTE_ZONE: "us-central1-c"
       - GOOGLE_CLUSTER_NAME: "cluster-1"
+      - APP_NAME: "gceme"
+      - IMAGE_TAG: "gcr.io/${PROJECT_NAME}/${APP_NAME}:latest"
     steps:
       - checkout
       - run: 
@@ -45,9 +47,7 @@ jobs:
       - run: 
           name: Docker build and push
           command: |
-            docker build -t my-app .
-            docker tag my-app us.gcr.io/sincere-chariot-264308/testing 
-            docker push us.gcr.io/sincere-chariot-264308/testing
+            PYTHONUNBUFFERED=1 gcloud builds submit -t ${IMAGE_TAG} .
       - run: 
           name: Deploy to Kubernetes
           command: |
