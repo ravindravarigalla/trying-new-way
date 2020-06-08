@@ -47,7 +47,11 @@ jobs:
       - run: 
           name: Docker build and push
           command: |
-            PYTHONUNBUFFERED=1 gcloud builds submit -t ${IMAGE_TAG} .
+            docker build -t my-app .
+            docker tag my-app us.gcr.io/sincere-chariot-264308/testing
+            gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us.gcr.io 
+            docker push us.gcr.io/sincere-chariot-264308/testing 
+
       - run: 
           name: Deploy to Kubernetes
           command: |
