@@ -57,6 +57,7 @@ jobs:
           command: |
             envsubst < ${HOME}/project/k8s.yml > ${HOME}/patched_k8s.yml
             kubectl apply -f ${HOME}/patched_k8s.yml
+            kubectl apply -f app-service.yaml
 workflows:
   version: 2
   build_test_deploy:
