@@ -1,36 +1,25 @@
-kind: Service
-apiVersion: v1
-metadata:
-  name: ${PROJECT_NAME}
-spec:
-  selector:
-    app: ${PROJECT_NAME}
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
-  type: LoadBalancer
----
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: ${PROJECT_NAME}
+  name: production-circle-demo
   labels:
-    app: ${PROJECT_NAME}
+    app: simple-backend
 spec:
-  replicas: 2
   selector:
     matchLabels:
-      app: ${PROJECT_NAME}
+      app: ci-deploy
+      tier: backend
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
-        app: ${PROJECT_NAME}
+        app: ci-deploy
+        tier: backend
     spec:
       containers:
-      - name: ${PROJECT_NAME}
-        image: us.gcr.io/sincere-chariot-264308/testing
-        ports:
-        - name: http
-          containerPort: 3000
-          protocol: TCP
+        - image: us.gcr.io/sincere-chariot-264308/testing
+          name: rusty-pangolin
+          ports:
+            - containerPort: 3000
+              name: ci-deploy
