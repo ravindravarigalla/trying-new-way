@@ -1,7 +1,7 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: production-circle-demo
+  name: sampleapp-circleci
   labels:
     app: simple-backend
 spec:
