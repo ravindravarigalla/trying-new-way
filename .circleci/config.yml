@@ -25,7 +25,6 @@ jobs:
   deploy_to_staging:
     docker:
       - image:  google/cloud-sdk
-      - image: us.gcr.io/sincere-chariot-264308/helm3
     environment:
       - PROJECT_NAME: "My First Project"
       - GOOGLE_PROJECT_ID: "sincere-chariot-264308"
@@ -53,10 +52,12 @@ jobs:
             gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us.gcr.io 
             docker push us.gcr.io/sincere-chariot-264308/testing 
       - run: 
-          name: Deploy to Kubernetes
+          name: Deploy with Helm
+          shell: /bin/bash
           command: |
            gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project sincere-chariot-264308
            helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+           helm repo update
            helm install circleci helm/circleci -n default 
            helm ls
 workflows:
