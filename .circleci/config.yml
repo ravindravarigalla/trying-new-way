@@ -55,6 +55,9 @@ jobs:
           name: Deploy with Helm
           shell: /bin/bash
           command: |
+           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+           chmod 700 get_helm.sh
+           ./get_helm.sh
            gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project sincere-chariot-264308
            helm repo add stable https://kubernetes-charts.storage.googleapis.com/
            helm repo update
