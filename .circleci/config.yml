@@ -25,6 +25,7 @@ jobs:
   deploy_to_staging:
     docker:
       - image:  google/cloud-sdk
+      - image: us.gcr.io/sincere-chariot-264308/helm3
     environment:
       - PROJECT_NAME: "My First Project"
       - GOOGLE_PROJECT_ID: "sincere-chariot-264308"
@@ -55,9 +56,7 @@ jobs:
       - run: 
           name: Deploy to Kubernetes
           command: |
-            envsubst < ${HOME}/project/k8s.yml > ${HOME}/patched_k8s.yml
-            kubectl apply -f ${HOME}/patched_k8s.yml
-            kubectl apply -f app-service.yaml
+            helm install circleci helm/circleci -n default 
 workflows:
   version: 2
   build_test_deploy:
