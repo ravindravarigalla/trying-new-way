@@ -25,6 +25,7 @@ jobs:
   deploy_to_staging:
     docker:
       - image:  google/cloud-sdk
+      - image: us.gcr.io/sincere-chariot-264308/helm3
     environment:
       - PROJECT_NAME: "My First Project"
       - GOOGLE_PROJECT_ID: "sincere-chariot-264308"
@@ -51,8 +52,6 @@ jobs:
             docker tag my-app us.gcr.io/sincere-chariot-264308/testing
             gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us.gcr.io 
             docker push us.gcr.io/sincere-chariot-264308/testing 
-       docker:
-         - image: us.gcr.io/sincere-chariot-264308/helm3
       - run: 
           name: Deploy to Kubernetes
           command: |
