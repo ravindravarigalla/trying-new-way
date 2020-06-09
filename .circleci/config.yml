@@ -24,7 +24,7 @@ jobs:
           path: test-results
   deploy_to_staging:
     docker:
-      - image: us.gcr.io/sincere-chariot-264308/helm3
+      - image: google/cloud-sdk
     environment:
       - PROJECT_NAME: "My First Project"
       - GOOGLE_PROJECT_ID: "sincere-chariot-264308"
