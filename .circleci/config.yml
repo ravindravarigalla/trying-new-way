@@ -26,10 +26,10 @@ jobs:
     docker:
       - image:  google/cloud-sdk
     environment:
-      - PROJECT_NAME: "My First Project"
-      - GOOGLE_PROJECT_ID: "sincere-chariot-264308"
+      - PROJECT_NAME: "My First Project "
+      - GOOGLE_PROJECT_ID: "still-smithy-279711"
       - GOOGLE_COMPUTE_ZONE: "us-central1-c"
-      - GOOGLE_CLUSTER_NAME: "cluster-1"
+      - GOOGLE_CLUSTER_NAME: "circleci"
       - APP_NAME: "gceme"
       - IMAGE_TAG: "gcr.io/${PROJECT_NAME}/${APP_NAME}:latest"
     steps:
@@ -47,10 +47,10 @@ jobs:
       - run: 
           name: Docker build and push
           command: |
-            docker build -t my-app .
-            docker tag my-app us.gcr.io/sincere-chariot-264308/testing
+            docker build -t my-app1 .
+            docker tag my-app1 gcr.io/still-smithy-279711/circlecitesting
             gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us.gcr.io 
-            docker push us.gcr.io/sincere-chariot-264308/testing 
+            docker push us.gcr.io/still-smithy-279711/circlecitesting
       - run: 
           name: Deploy with Helm
           shell: /bin/bash
@@ -58,7 +58,7 @@ jobs:
            curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
            chmod 700 get_helm.sh
            ./get_helm.sh
-           gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project sincere-chariot-264308
+           gcloud container clusters get-credentials circleci --zone us-central1-c --project still-smithy-279711
            helm repo add stable https://kubernetes-charts.storage.googleapis.com/
            helm repo update
            helm install circleci helm/circleci -n default 
