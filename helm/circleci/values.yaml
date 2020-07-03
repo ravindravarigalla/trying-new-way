@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: us.gcr.io/sincere-chariot-264308/testing
+  repository: gcr.io/still-smithy-279711/testingcircleci
   pullPolicy: Always
   # Overrides the image tag whose default is the chart version.
   tag: "latest"
