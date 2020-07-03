@@ -50,7 +50,7 @@ jobs:
             docker build -t my-app1 .
             docker tag my-app1 gcr.io/still-smithy-279711/circlecitesting
             gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us.gcr.io 
-            docker push us.gcr.io/still-smithy-279711/circlecitesting
+            docker push gcr.io/still-smithy-279711/circlecitesting
       - run: 
           name: Deploy with Helm
           shell: /bin/bash
